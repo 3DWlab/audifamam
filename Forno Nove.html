@@ -1,0 +1,543 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Forno Nove</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: abertura com tipografia grande e pão em SVG; cardápio com cesta lateral; laboratório de fermentação (gráfico + calculadora); painel final sobre o que a página faz */
+:root {
+  --bg: #f1f4f0;
+  --surface: #ffffff;
+  --fg: #17201b;
+  --muted: #55625a;
+  --line: #d3dbd2;
+  --accent: #2438c8;
+  --on-accent: #ffffff;
+  --accent-soft: #e1e5fb;
+  --crust: #b9722f;
+  --crust-dark: #7d4519;
+  --crumb: #f2dfb8;
+  --good: #1f7a45;
+  --good-soft: #d9efe1;
+  --wa: #128c4a;
+  --on-wa: #ffffff;
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1511;
+    --surface: #18201b;
+    --fg: #e8eee9;
+    --muted: #9aa89f;
+    --line: #2c3830;
+    --accent: #8f9dff;
+    --on-accent: #0d1233;
+    --accent-soft: #1d2447;
+    --crust: #d28a45;
+    --crust-dark: #8f5522;
+    --crumb: #e9cf9f;
+    --good: #6fd09a;
+    --good-soft: #17301f;
+    --wa: #3ddc84;
+    --on-wa: #072414;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1511;
+  --surface: #18201b;
+  --fg: #e8eee9;
+  --muted: #9aa89f;
+  --line: #2c3830;
+  --accent: #8f9dff;
+  --on-accent: #0d1233;
+  --accent-soft: #1d2447;
+  --crust: #d28a45;
+  --crust-dark: #8f5522;
+  --crumb: #e9cf9f;
+  --good: #6fd09a;
+  --good-soft: #17301f;
+  --wa: #3ddc84;
+  --on-wa: #072414;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.06; margin: 0; text-wrap: balance; letter-spacing: -0.015em; }
+p { margin: 0; }
+a { color: var(--accent); }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.demo-note { font-family: var(--f-mono); font-size: 12px; color: var(--muted); padding-block: 12px; border-bottom: 1px solid var(--line); letter-spacing: 0.02em; }
+
+header.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; flex-wrap: wrap; }
+.brand { font-family: var(--f-display); font-weight: 800; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; color: var(--on-accent); font-size: 15px; font-weight: 800; }
+.top-right { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav { display: flex; gap: 18px; font-size: 15px; font-weight: 500; flex-wrap: wrap; }
+nav a { color: var(--fg); text-decoration: none; }
+nav a:hover { color: var(--accent); }
+.theme-btn { border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-family: var(--f-mono); cursor: pointer; }
+.theme-btn:hover { border-color: var(--accent); }
+
+/* Hero */
+.hero { padding-block: 36px 60px; display: grid; gap: 32px; grid-template-columns: 1.25fr 1fr; align-items: center; }
+.hero h1 { font-size: clamp(42px, 7.4vw, 84px); font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lead { color: var(--muted); font-size: 18px; max-width: 46ch; margin-top: 20px; }
+.cta-row { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+.btn { font-weight: 600; padding: 12px 20px; border-radius: 6px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--on-accent); cursor: pointer; text-decoration: none; display: inline-block; transition: filter .15s; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:hover { filter: brightness(1.1); }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+.hero-art { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 14px; min-width: 0; }
+.hero-art svg { width: 100%; height: auto; display: block; }
+.hero-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.hero-meta b { display: block; color: var(--fg); font-weight: 500; font-size: 15px; }
+.steam { animation: steam 4.5s ease-in-out infinite; transform-origin: center bottom; }
+.steam.s2 { animation-delay: 1.2s; }
+.steam.s3 { animation-delay: 2.4s; }
+@keyframes steam { 0%, 100% { opacity: .35; transform: translateY(0); } 50% { opacity: .8; transform: translateY(-6px); } }
+
+section { padding-block: 48px; border-top: 1px solid var(--line); }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.sec-head h2 { font-size: clamp(28px, 4.4vw, 42px); font-weight: 800; }
+.sec-head span { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+
+/* Menu + cart */
+.shop { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+.menu { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; min-width: 0; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.item h3 { font-size: 21px; font-weight: 700; }
+.item p { color: var(--muted); font-size: 14px; flex: 1; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 12px; }
+.tags span { background: var(--accent-soft); color: var(--fg); padding: 2px 8px; border-radius: 4px; }
+.item-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.price { font-family: var(--f-mono); font-weight: 500; font-size: 17px; font-variant-numeric: tabular-nums; }
+
+.cart { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; position: sticky; top: 16px; min-width: 0; }
+.cart h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+.cart-empty { color: var(--muted); font-size: 14px; padding-block: 8px; }
+.line { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding-block: 10px; border-top: 1px solid var(--line); font-size: 15px; }
+.line .nm { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.line .sub { font-family: var(--f-mono); font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; }
+.qty { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); }
+.qty button { width: 28px; height: 28px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; line-height: 1; }
+.qty button:hover { border-color: var(--accent); }
+.qty output { min-width: 1.5ch; text-align: center; font-variant-numeric: tabular-nums; }
+.total { display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid var(--fg); margin-top: 6px; padding-top: 12px; font-weight: 600; }
+.total b { font-family: var(--f-mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.cart label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; margin-top: 14px; }
+select, input[type="number"] { font: inherit; font-weight: 400; color: var(--fg); background: var(--bg); border: 1.5px solid var(--line); border-radius: 6px; padding: 9px 12px; width: 100%; }
+.cart .btn { width: 100%; margin-top: 14px; }
+.note-box { margin-top: 12px; font-size: 14px; background: var(--accent-soft); border-radius: 6px; padding: 10px 12px; }
+.note-box[hidden] { display: none; }
+
+/* Lab */
+.lab { display: grid; grid-template-columns: 1.5fr 1fr; gap: 24px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.panel h3 { font-size: 22px; font-weight: 700; }
+.panel .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.slider-row { display: flex; align-items: center; gap: 14px; margin-top: 16px; flex-wrap: wrap; }
+.slider-row label { font-weight: 600; font-size: 14px; }
+.slider-row input[type="range"] { flex: 1; min-width: 160px; accent-color: var(--accent); }
+.slider-row output { font-family: var(--f-mono); font-size: 18px; min-width: 5ch; text-align: right; }
+.readout { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.readout div { background: var(--bg); border-radius: 8px; padding: 10px 12px; min-width: 0; }
+.readout small { display: block; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.readout b { font-family: var(--f-mono); font-weight: 500; font-size: 19px; font-variant-numeric: tabular-nums; }
+.chart-wrap { margin-top: 14px; overflow-x: auto; }
+#chart { width: 100%; min-width: 440px; height: auto; display: block; }
+.chart-note { font-size: 12px; color: var(--muted); margin-top: 8px; font-family: var(--f-mono); }
+
+.calc { display: grid; gap: 12px; margin-top: 14px; }
+.calc label { display: grid; gap: 5px; font-size: 14px; font-weight: 600; }
+.calc .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.recipe { margin: 14px 0 0; padding: 0; list-style: none; font-family: var(--f-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.recipe li { display: flex; justify-content: space-between; gap: 10px; padding-block: 8px; border-top: 1px solid var(--line); }
+.recipe li:last-child { border-top: 2px solid var(--fg); font-weight: 500; }
+.recipe .err { color: var(--crust-dark); }
+
+/* Showcase */
+.cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.cap { border-top: 3px solid var(--accent); padding-top: 12px; min-width: 0; }
+.cap h3 { font-size: 20px; font-weight: 700; }
+.cap p { color: var(--muted); font-size: 15px; margin-top: 6px; }
+
+.visit { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.visit h3 { font-size: 20px; margin-bottom: 10px; }
+.hours { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; font-family: var(--f-mono); font-size: 14px; margin: 0; }
+.hours dt { color: var(--muted); }
+.hours dd { margin: 0; }
+
+.btn.wa { display: inline-flex; align-items: center; gap: 8px; background: var(--wa); border-color: var(--wa); color: var(--on-wa); }
+.btn.wa svg { width: 20px; height: 20px; flex: none; }
+.wa-float { position: fixed; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); border-radius: 999px; padding: 12px 18px; }
+.wa-note { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 8px; }
+body { padding-bottom: 72px; }
+
+footer { padding-block: 28px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; font-family: var(--f-mono); }
+
+@media (max-width: 860px) {
+  .hero, .shop, .lab, .visit { grid-template-columns: 1fr; }
+  .cart { position: static; }
+  .cap-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .menu, .cap-grid, .calc .two { grid-template-columns: 1fr; }
+  .readout { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <p class="demo-note">PÁGINA DE TESTE · negócio e dados fictícios, feitos para mostrar o que um site completo pode ter</p>
+
+  <header class="top">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">9</span> Forno Nove</div>
+    <div class="top-right">
+      <nav aria-label="Seções">
+        <a href="#cardapio">Cardápio</a>
+        <a href="#laboratorio">Laboratório</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#horarios">Horários</a>
+      </nav>
+      <button class="theme-btn" id="theme-btn" type="button" aria-label="Alternar tema claro e escuro">tema: auto</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Pão de fermentação lenta, <em>assado às 6h.</em></h1>
+      <p class="lead">Farinha de moagem local, 36 horas de fermentação e fornada pequena. Monte sua cesta hoje e retire quentinho amanhã.</p>
+      <div class="cta-row">
+        <a class="btn" href="#cardapio">Montar cesta</a>
+        <a class="btn ghost" href="#laboratorio">Ver a fermentação</a>
+        <a class="btn wa" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20encomendar%20p%C3%A3es%20da%20Forno%20Nove" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.200zm4.500-6.100c-.2-.1-1.500-.7-1.700-.8-.2-.1-.4-.1-.6.100l-.8 1c-.1.200-.3.200-.5.100a6.700 6.700 0 0 1-3.300-2.900c-.2-.4.200-.4.700-1.300.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.300 3 3 0 0 0-.9 2.200 5.200 5.200 0 0 0 1.100 2.800c.1.200 2 3.100 4.900 4.300 1.800.8 2.500.8 3.400.7.500-.1 1.500-.6 1.700-1.200.2-.6.200-1.100.2-1.200-.1-.1-.3-.2-.5-.3z"/></svg>Chamar no WhatsApp</a>
+      </div>
+      <p class="wa-note">Botão de demonstração: o número é fictício.</p>
+    </div>
+    <div class="hero-art" aria-label="Ilustração de um pão recém-assado">
+      <svg viewBox="0 0 400 300" role="img" aria-label="Pão com cortes na casca e vapor subindo">
+        <ellipse cx="200" cy="262" rx="150" ry="14" fill="var(--line)"/>
+        <path d="M60 220 C 50 150, 110 82, 200 82 C 290 82, 350 150, 340 220 C 338 242, 300 252, 200 252 C 100 252, 62 242, 60 220 Z" fill="var(--crust)"/>
+        <path d="M60 220 C 62 242, 100 252, 200 252 C 300 252, 338 242, 340 220 C 330 236, 290 244, 200 244 C 110 244, 70 236, 60 220 Z" fill="var(--crust-dark)"/>
+        <path d="M120 150 C 140 128, 160 124, 176 132" stroke="var(--crumb)" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M172 126 C 192 108, 214 106, 230 116" stroke="var(--crumb)" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M226 124 C 248 112, 268 116, 282 130" stroke="var(--crumb)" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M110 190 C 130 178, 152 176, 170 184" stroke="var(--crust-dark)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".5"/>
+        <path d="M240 186 C 260 176, 282 178, 296 190" stroke="var(--crust-dark)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".5"/>
+        <g fill="none" stroke="var(--muted)" stroke-width="4" stroke-linecap="round">
+          <path class="steam" d="M150 66 C 138 52, 162 42, 150 28"/>
+          <path class="steam s2" d="M200 62 C 188 46, 212 36, 200 20"/>
+          <path class="steam s3" d="M250 66 C 238 52, 262 42, 250 28"/>
+        </g>
+      </svg>
+      <div class="hero-meta">
+        <div><b>240 °C</b>forno com vapor</div>
+        <div><b>48</b>pães por lote</div>
+        <div><b>36 h</b>de fermentação</div>
+      </div>
+    </div>
+  </div>
+
+  <section id="cardapio">
+    <div class="sec-head"><h2>Cardápio e cesta</h2><span>preços em R$ · hidratação = água sobre farinha</span></div>
+    <div class="shop">
+      <div class="menu" id="menu"></div>
+      <aside class="cart" aria-label="Sua cesta">
+        <h3>Sua cesta</h3>
+        <div id="cart-lines"></div>
+        <div class="total"><span>Total</span><b id="cart-total">R$ 0,00</b></div>
+        <label for="retirada">Retirada
+          <select id="retirada">
+            <option>Amanhã, 07h às 10h</option>
+            <option>Amanhã, 16h às 18h</option>
+            <option>Sábado, 08h às 12h</option>
+          </select>
+        </label>
+        <button class="btn" id="checkout" type="button">Finalizar (simulação)</button>
+        <p class="note-box" id="checkout-note" role="status" aria-live="polite" hidden></p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="laboratorio">
+    <div class="sec-head"><h2>Laboratório de fermentação</h2><span>a massa reage à temperatura da cozinha</span></div>
+    <div class="lab">
+      <div class="panel">
+        <h3>Quando a massa está pronta?</h3>
+        <p class="sub">Arraste a temperatura e veja a curva de crescimento. A faixa verde é o ponto de forno, entre 150% e 200% do volume inicial.</p>
+        <div class="slider-row">
+          <label for="temp">Temperatura</label>
+          <input id="temp" type="range" min="4" max="30" step="1" value="22">
+          <output id="temp-out" for="temp">22 °C</output>
+        </div>
+        <div class="readout">
+          <div><small>Dobra em</small><b id="r-double">--</b></div>
+          <div><small>Ponto de forno</small><b id="r-ready">--</b></div>
+          <div><small>Passa do ponto</small><b id="r-over">--</b></div>
+        </div>
+        <div class="chart-wrap">
+          <svg id="chart" viewBox="0 0 640 300" role="img" aria-label="Gráfico do volume da massa ao longo de 36 horas"></svg>
+        </div>
+        <p class="chart-note">Modelo ilustrativo para demonstração. Cada 7 °C a menos dobra o tempo de fermentação.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Calculadora do padeiro</h3>
+        <p class="sub">Porcentagens sobre a farinha total, contando a farinha do fermento (hidratação de 100%).</p>
+        <div class="calc">
+          <label for="c-flour">Farinha total (g)<input id="c-flour" type="number" min="100" max="20000" step="50" value="1000"></label>
+          <div class="two">
+            <label for="c-hyd">Hidratação (%)<input id="c-hyd" type="number" min="50" max="110" step="1" value="75"></label>
+            <label for="c-starter">Fermento (%)<input id="c-starter" type="number" min="1" max="50" step="1" value="20"></label>
+          </div>
+          <label for="c-salt">Sal (%)<input id="c-salt" type="number" min="0" max="4" step="0.1" value="2"></label>
+        </div>
+        <ul class="recipe" id="recipe" aria-live="polite"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="recursos">
+    <div class="sec-head"><h2>O que esta página faz</h2><span>tudo aqui roda dentro de uma única página</span></div>
+    <div class="cap-grid">
+      <div class="cap"><h3>Identidade própria</h3><p>Paleta, tipografia e ilustração pensadas para uma padaria, sem modelo pronto.</p></div>
+      <div class="cap"><h3>Cesta que calcula</h3><p>Adicione pães, mude as quantidades e veja o total na hora.</p></div>
+      <div class="cap"><h3>Gráfico interativo</h3><p>A curva de fermentação é desenhada em escala e muda com o controle de temperatura.</p></div>
+      <div class="cap"><h3>Ferramenta útil</h3><p>A calculadora entrega a receita em gramas, o tipo de recurso que faz o cliente voltar ao site.</p></div>
+      <div class="cap"><h3>Tema claro e escuro</h3><p>O botão no topo troca o tema e a página segue o do aparelho por padrão.</p></div>
+      <div class="cap"><h3>Funciona no celular</h3><p>O layout se reorganiza em telas pequenas, sem rolagem lateral.</p></div>
+    </div>
+  </section>
+
+  <section id="horarios">
+    <div class="visit">
+      <div>
+        <h3>Horários</h3>
+        <dl class="hours">
+          <dt>Ter a sex</dt><dd>07:00 às 18:00</dd>
+          <dt>Sábado</dt><dd>07:00 às 13:00</dd>
+          <dt>Dom e seg</dt><dd>fechado</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Endereço</h3>
+        <p>Rua do Exemplo, 90<br>Endereço fictício desta página de teste.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 Forno Nove · página de demonstração</footer>
+</div>
+
+<a class="btn wa wa-float" href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20encomendar%20p%C3%A3es%20da%20Forno%20Nove" target="_blank" rel="noopener noreferrer" aria-label="Chamar no WhatsApp (número de demonstração)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.200zm4.500-6.100c-.2-.1-1.500-.7-1.700-.8-.2-.1-.4-.1-.6.100l-.8 1c-.1.200-.3.200-.5.100a6.700 6.700 0 0 1-3.300-2.900c-.2-.4.200-.4.700-1.300.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.300 3 3 0 0 0-.9 2.200 5.200 5.200 0 0 0 1.100 2.800c.1.200 2 3.100 4.900 4.300 1.800.8 2.500.8 3.400.7.500-.1 1.500-.6 1.700-1.200.2-.6.200-1.100.2-1.200-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp</a>
+
+<script>
+(function () {
+  var brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+  var num1 = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
+
+  /* ---------- Tema ---------- */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme-btn");
+  var mode = "auto";
+  function applyTheme() {
+    if (mode === "auto") { root.removeAttribute("data-theme"); }
+    else { root.setAttribute("data-theme", mode); }
+    themeBtn.textContent = "tema: " + (mode === "auto" ? "auto" : mode === "dark" ? "escuro" : "claro");
+  }
+  themeBtn.addEventListener("click", function () {
+    mode = mode === "auto" ? "dark" : mode === "dark" ? "light" : "auto";
+    applyTheme();
+  });
+
+  /* ---------- Cardápio e cesta ---------- */
+  var products = [
+    { id: "campanha", nome: "Campanha", desc: "Casca grossa e miolo aberto, trigo e centeio.", peso: 800, hid: 78, preco: 28 },
+    { id: "integral", nome: "Integral de mel", desc: "100% farinha integral com um toque de mel.", peso: 600, hid: 85, preco: 24 },
+    { id: "azeitona", nome: "Azeitona e alecrim", desc: "Azeitona preta sem caroço e alecrim fresco.", peso: 700, hid: 72, preco: 30 },
+    { id: "baguete", nome: "Baguete", desc: "Fermentação de 18 h, assada sobre pedra.", peso: 280, hid: 70, preco: 12 }
+  ];
+  var cart = {};
+  var menu = document.getElementById("menu");
+  var linesEl = document.getElementById("cart-lines");
+  var totalEl = document.getElementById("cart-total");
+  var noteEl = document.getElementById("checkout-note");
+
+  products.forEach(function (p) {
+    var card = document.createElement("div");
+    card.className = "item";
+    var h = document.createElement("h3"); h.textContent = p.nome;
+    var d = document.createElement("p"); d.textContent = p.desc;
+    var tags = document.createElement("div"); tags.className = "tags";
+    [p.peso + " g", p.hid + "% hidr."].forEach(function (t) {
+      var s = document.createElement("span"); s.textContent = t; tags.appendChild(s);
+    });
+    var foot = document.createElement("div"); foot.className = "item-foot";
+    var pr = document.createElement("span"); pr.className = "price"; pr.textContent = brl.format(p.preco);
+    var b = document.createElement("button"); b.type = "button"; b.className = "btn small"; b.textContent = "Adicionar";
+    b.addEventListener("click", function () { cart[p.id] = (cart[p.id] || 0) + 1; renderCart(); });
+    foot.appendChild(pr); foot.appendChild(b);
+    card.appendChild(h); card.appendChild(tags); card.appendChild(d); card.appendChild(foot);
+    menu.appendChild(card);
+  });
+
+  function renderCart() {
+    linesEl.textContent = "";
+    var total = 0, count = 0;
+    products.forEach(function (p) {
+      var q = cart[p.id] || 0;
+      if (!q) return;
+      count += q;
+      total += q * p.preco;
+      var row = document.createElement("div"); row.className = "line";
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = p.nome;
+      var sub = document.createElement("span"); sub.className = "sub"; sub.textContent = brl.format(q * p.preco);
+      var qty = document.createElement("span"); qty.className = "qty";
+      var minus = document.createElement("button"); minus.type = "button"; minus.textContent = "−"; minus.setAttribute("aria-label", "Diminuir " + p.nome);
+      var out = document.createElement("output"); out.textContent = q;
+      var plus = document.createElement("button"); plus.type = "button"; plus.textContent = "+"; plus.setAttribute("aria-label", "Aumentar " + p.nome);
+      minus.addEventListener("click", function () { cart[p.id] = Math.max(0, (cart[p.id] || 0) - 1); renderCart(); });
+      plus.addEventListener("click", function () { cart[p.id] = (cart[p.id] || 0) + 1; renderCart(); });
+      qty.appendChild(minus); qty.appendChild(out); qty.appendChild(plus);
+      row.appendChild(nm); row.appendChild(sub); row.appendChild(qty);
+      linesEl.appendChild(row);
+    });
+    if (!count) {
+      var e = document.createElement("p"); e.className = "cart-empty"; e.textContent = "Nenhum pão ainda. Toque em Adicionar no cardápio.";
+      linesEl.appendChild(e);
+    }
+    totalEl.textContent = brl.format(total);
+    noteEl.hidden = true;
+  }
+  document.getElementById("checkout").addEventListener("click", function () {
+    var total = 0, count = 0;
+    products.forEach(function (p) { var q = cart[p.id] || 0; count += q; total += q * p.preco; });
+    noteEl.hidden = false;
+    if (!count) { noteEl.textContent = "Adicione pelo menos um pão para finalizar."; return; }
+    noteEl.textContent = count + (count === 1 ? " pão" : " pães") + ", " + brl.format(total) + ", retirada: " + document.getElementById("retirada").value.toLowerCase() + ". Isto é uma simulação e nenhum pedido foi enviado.";
+  });
+  cart.campanha = 1;
+  cart.baguete = 2;
+  renderCart();
+
+  /* ---------- Gráfico de fermentação ---------- */
+  var svgNS = "http://www.w3.org/2000/svg";
+  var chart = document.getElementById("chart");
+  var tempIn = document.getElementById("temp");
+  var tempOut = document.getElementById("temp-out");
+  var W = 640, H = 300, L = 48, R = 16, T = 16, B = 36;
+  var XMAX = 36, YMIN = 100, YMAX = 300;
+  function sx(h) { return L + (h / XMAX) * (W - L - R); }
+  function sy(v) { return H - B - ((v - YMIN) / (YMAX - YMIN)) * (H - T - B); }
+  function el(name, attrs, text) {
+    var n = document.createElementNS(svgNS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function doublingTime(t) { return 4 * Math.pow(2, (24 - t) / 7); }
+  function hoursTo(vol, td) { return td * Math.log(vol / 100) / Math.LN2; }
+  function fmtH(h) {
+    if (h > XMAX + 0.5) return "> " + XMAX + " h";
+    var hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+    if (mm === 60) { hh += 1; mm = 0; }
+    return hh + " h " + (mm < 10 ? "0" : "") + mm;
+  }
+  function drawChart() {
+    var t = Number(tempIn.value);
+    tempOut.textContent = t + " °C";
+    var td = doublingTime(t);
+    var tReady = hoursTo(150, td), tReadyEnd = hoursTo(200, td), tOver = hoursTo(250, td);
+    document.getElementById("r-double").textContent = fmtH(td);
+    document.getElementById("r-ready").textContent = fmtH(tReady) + " a " + fmtH(tReadyEnd);
+    document.getElementById("r-over").textContent = fmtH(tOver);
+
+    chart.textContent = "";
+    // zona de ponto de forno
+    chart.appendChild(el("rect", { x: L, y: sy(200), width: W - L - R, height: sy(150) - sy(200), fill: "var(--good-soft)" }));
+    // grade e eixo Y
+    [100, 150, 200, 250, 300].forEach(function (v) {
+      chart.appendChild(el("line", { x1: L, x2: W - R, y1: sy(v), y2: sy(v), stroke: "var(--line)", "stroke-width": 1 }));
+      chart.appendChild(el("text", { x: L - 8, y: sy(v) + 4, "text-anchor": "end", "font-size": 11, "font-family": "IBM Plex Mono, monospace", fill: "var(--muted)" }, v + "%"));
+    });
+    // eixo X
+    [0, 6, 12, 18, 24, 30, 36].forEach(function (h) {
+      chart.appendChild(el("line", { x1: sx(h), x2: sx(h), y1: H - B, y2: H - B + 4, stroke: "var(--muted)", "stroke-width": 1 }));
+      chart.appendChild(el("text", { x: sx(h), y: H - B + 18, "text-anchor": "middle", "font-size": 11, "font-family": "IBM Plex Mono, monospace", fill: "var(--muted)" }, h + " h"));
+    });
+    chart.appendChild(el("text", { x: L + 8, y: sy(200) + 14, "font-size": 11, "font-family": "IBM Plex Mono, monospace", fill: "var(--good)" }, "ponto de forno"));
+    // curva
+    var pts = [];
+    for (var h = 0; h <= XMAX; h += 0.25) {
+      var v = Math.min(YMAX, 100 * Math.pow(2, h / td));
+      pts.push(sx(h).toFixed(1) + "," + sy(v).toFixed(1));
+      if (v >= YMAX) break;
+    }
+    chart.appendChild(el("polyline", { points: pts.join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 3, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    // marcador do início do ponto de forno
+    if (tReady <= XMAX) {
+      chart.appendChild(el("line", { x1: sx(tReady), x2: sx(tReady), y1: sy(150), y2: H - B, stroke: "var(--accent)", "stroke-width": 1.5, "stroke-dasharray": "4 4" }));
+      chart.appendChild(el("circle", { cx: sx(tReady), cy: sy(150), r: 5, fill: "var(--accent)" }));
+    }
+  }
+  tempIn.addEventListener("input", drawChart);
+  drawChart();
+
+  /* ---------- Calculadora do padeiro ---------- */
+  var recipe = document.getElementById("recipe");
+  function g(n) { return num1.format(n) + " g"; }
+  function calc() {
+    var F = Number(document.getElementById("c-flour").value);
+    var hyd = Number(document.getElementById("c-hyd").value);
+    var st = Number(document.getElementById("c-starter").value);
+    var salt = Number(document.getElementById("c-salt").value);
+    recipe.textContent = "";
+    function li(label, value, cls) {
+      var item = document.createElement("li");
+      var a = document.createElement("span"); a.textContent = label;
+      var b = document.createElement("span"); b.textContent = value;
+      if (cls) item.className = cls;
+      item.appendChild(a); item.appendChild(b); recipe.appendChild(item);
+    }
+    if (!(F > 0) || !(hyd > 0) || !(st >= 0) || !(salt >= 0)) {
+      li("Preencha todos os campos", "", "err"); return;
+    }
+    var starter = F * st / 100;
+    var starterHalf = starter / 2;
+    var freshFlour = F - starterHalf;
+    var waterTotal = F * hyd / 100;
+    var waterAdd = waterTotal - starterHalf;
+    var saltG = F * salt / 100;
+    if (waterAdd < 0 || freshFlour < 0) {
+      li("Fermento demais para essa hidratação", "ajuste os valores", "err"); return;
+    }
+    li("Farinha a adicionar", g(freshFlour));
+    li("Água a adicionar", g(waterAdd));
+    li("Fermento natural", g(starter));
+    li("Sal", g(saltG));
+    li("Massa total", g(freshFlour + waterAdd + starter + saltG));
+  }
+  ["c-flour", "c-hyd", "c-starter", "c-salt"].forEach(function (id) {
+    document.getElementById(id).addEventListener("input", calc);
+  });
+  calc();
+})();
+</script>
+
+</body></html>
